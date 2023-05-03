@@ -44,11 +44,11 @@ app.use(cors());
 
 //Body Parser middleware to parse request bodies
 app.use(
-	bodyParser.urlencoded({
+	bodyParser.urlencoded({  
 		extended: false,
 	})
 );
-app.use(bodyParser.json());
+app.use(bodyParser.json()); 
 
 
 //api routes
