@@ -31,8 +31,7 @@ app.use(function (req, res, next) {
 });
 
 
-//mongoose connect
-console.log(mongodbURI);
+//mongoose connect 
 mongoose
 .connect(mongodbURI)
 .then(() => console.log("mongoDB Successfully connected")) 
