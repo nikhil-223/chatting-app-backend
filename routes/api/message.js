@@ -18,18 +18,18 @@ router.use((req, res, next) => {
 	}
 
 	// validating token
-	let jwtUser = jwt.verify(token.split(" ")[1], JWT_SECRET);
+	jwtUser = jwt.verify(token.split(" ")[1], JWT_SECRET);
 	console.log(jwtUser);
 	// jwtUser is a loged in user
 	if (!jwtUser) {
-		return res.status(400).json("unauthorised");
+		return res.status(400).json("unauthorised"); 
 	} else {
 		next();
 	}
 });
 
 //api/messages/global_message
-router.post("/global_message", async (req, res) => {
+router.post("/global_message", async (req, res) => { 
 	let message = new GlobalMessage({
 		from: jwtUser.id,
 		message: req.body.message,
