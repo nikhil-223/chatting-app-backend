@@ -7,17 +7,18 @@ const Conversation = require("../../models/Conversation");
 const mongoose = require("mongoose");
 
 let jwtUser;
-const JWT_SECRET = process.env.JWT_SECRET || "hello";
+const JWT_SECRET = process.env.JWT_SECRET;
+
 // global validation
 router.use((req, res, next) => {
 	let token = req.headers.auth;
-	//token bearer token...
-	//check token is present
+	//token bearer token....
 	if (!token) {
-		return res.status(400).json("unauthorised without token");
+		return res.status(400).json("unauthorized");
 	}
+
 	// validating token
-	jwtUser = jwt.verify(token.split(" ")[1], "hello");
+	let jwtUser = jwt.verify(token.split(" ")[1], JWT_SECRET);
 	console.log(jwtUser);
 	// jwtUser is a loged in user
 	if (!jwtUser) {

@@ -6,10 +6,11 @@ const validateLoginInput = require("../../validation/login");
 const User = require("../../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const mongoose= require('mongoose')
+const mongoose = require("mongoose");
 
-const JWT_SECRET = process.env.JWT_SECRET || "hello";
-// api/user/login  to login 
+const JWT_SECRET = process.env.JWT_SECRET;
+
+// api/user/login  to login
 router.post("/login", async (req, res) => {
 	console.log("login come......");
 	//validation
@@ -31,13 +32,13 @@ router.post("/login", async (req, res) => {
 				username: user.username,
 			};
 			jwt.sign(
-				payload, 
+				payload,
 				JWT_SECRET,
-				{ 
+				{
 					expiresIn: 31556929,
 				},
 				(err, token) => {
-					if (err) console.log(err);
+					if (err) console.log("hello", err);
 					res.json({
 						success: true,
 						id: user._id,
@@ -63,7 +64,7 @@ router.post("/register", async (req, res) => {
 	//check weather user already exists
 	let user = await User.findOne({ username: req.body.username });
 	if (user) {
-		return res.status(400).json({error:"this user already exist"});
+		return res.status(400).json({ error: "this user already exist" });
 	}
 
 	const newUser = new User({
@@ -91,7 +92,7 @@ router.post("/register", async (req, res) => {
 						res.json({
 							success: true,
 							id: user._id,
-							name:user.name,
+							name: user.name,
 							username: user.username,
 							token: "Bearer " + token,
 						});
@@ -104,16 +105,16 @@ router.post("/register", async (req, res) => {
 
 // api/users/     to get all other users
 router.get("/", async (req, res) => {
-	let token = req.headers.auth; 
+	let token = req.headers.auth;
 	//token bearer token....
 	if (!token) {
 		return res.status(400).json("unauthorized");
 	}
 	let jwtUser = jwt.verify(token.split(" ")[1], JWT_SECRET);
 	if (!jwtUser) {
-		return res.status(400).json("unauthorised"); 
+		return res.status(400).json("unauthorised");
 	}
-	 
+
 	let user = await User.aggregate()
 		.match({ _id: { $not: { $eq: new mongoose.Types.ObjectId(jwtUser.id) } } })
 		.project({
