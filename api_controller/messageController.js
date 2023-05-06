@@ -118,6 +118,25 @@ exports.getPersonalMessages = async (req, res) => {
 	res.send(conversationList);
 };
 
+exports.deleteMessage = async (req, res) => {
+
+	const messageId = new mongoose.Types.ObjectId(req.body.messageId);
+	const message = await Message.aggregate([
+		{
+			$match: { _id: messageId },
+		},
+	]).project({
+		to: 0,
+		from: 0,
+		body: 0,
+		date: 0,
+		__v: 0,
+	}); 
+	console.log(message, messageId);
+	const deletedMessage = await Message.deleteOne({ _id: messageId });
+	res.json( message );
+}; 
+
 exports.getGlobalMessages = async (req, res) => {
 	const globalMessages = await GlobalMessage.aggregate([
 		{

@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { sendGlobalMessage, sendPersonalMessage, getPersonalMessages, getConversations, getGlobalMessages } = require("../../api_controller/messageController");
+const { sendGlobalMessage, sendPersonalMessage, getPersonalMessages, getConversations, getGlobalMessages, deleteMessage } = require("../../api_controller/messageController");
 const { jwtVerify } = require("../../middlewares/JWTverification");
 
 // global validation
@@ -20,5 +20,7 @@ router.get("/fetchConversationList", getConversations);
 
 //api/messages/fetchGlobalMessages
 router.get("/fetchGlobalMessages", getGlobalMessages);
+
+router.delete("/deleteMessage", deleteMessage);
 
 module.exports = router;
