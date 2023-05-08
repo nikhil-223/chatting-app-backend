@@ -115,3 +115,19 @@ exports.getOthers = async (req, res) => {
 
 	res.json(user);
 };
+
+
+// get userdetails
+exports.getMydetails = async (req, res) => {
+	
+	let user = await User.aggregate()
+		.match({ _id:{ $eq: new mongoose.Types.ObjectId(req.user.id) } })
+		.project({
+			password: 0,
+			date: 0,
+		})
+		.exec();
+
+	res.json(user);
+};
+

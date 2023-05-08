@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const { login, register, getOthers } = require("../../api_controller/userController");
+const { login, register, getOthers, getMydetails } = require("../../api_controller/userController");
 const { jwtVerify } = require("../../middlewares/JWTverification");
 
 
@@ -15,4 +15,6 @@ router.post("/register", register);
 router.get("/",jwtVerify, getOthers);
 
 // api/users/
+router.get("/userDetails", jwtVerify, getMydetails);
+
 module.exports = router;
