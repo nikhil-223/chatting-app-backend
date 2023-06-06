@@ -19,9 +19,6 @@ const UserSchema = new Schema({
 		type: String,
 		require: true,
 	},
-	imageFile:{
-		type: String,
-	},
 	date: {
 		type: String,
 		default: Date.now,

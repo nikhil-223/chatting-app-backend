@@ -25,7 +25,6 @@ exports.register = async (req, res) => {
 		name: req.body.name,
 		username: req.body.username,
 		password: req.body.password,
-		imageFile:req.body.imageFile
 	});
 
 	bcrypt.genSalt(Number(process.env.SALT_ROUNDS) || 10, function (err, salt) {
